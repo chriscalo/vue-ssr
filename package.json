@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "dev": "nodemon -r esm ./server/index.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-start": "^0.1.4",
     "vue": "^2.6.10",
