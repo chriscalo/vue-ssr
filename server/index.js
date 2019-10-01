@@ -11,12 +11,32 @@ const app = express();
 
 app.get("/", async (req, res, next) => {
   const html = await render(rootPage);
-  res.send(html)
+  res.send(`
+    <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <title>Root</title>
+        </head>
+        <body>
+          ${html}
+        </body>
+      </html>
+  `);
 });
 
 app.get("/about/", async (req, res, next) => {
   const html = await render(aboutPage);
-  res.send(html)
+  res.send(`
+    <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <title>About</title>
+        </head>
+        <body>
+          ${html}
+        </body>
+      </html>
+  `);
 });
 
 start(app);
