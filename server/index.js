@@ -1,20 +1,21 @@
-const Vue = require("vue");
-const express = require("express");
-const { start } = require("express-start");
+import Vue from "vue";
+import express from "express";
+import { start } from "express-start";
 
-const { render } = require("./vue-ssr");
+import { render } from "./vue-ssr";
+
+import rootPage from "../pages/";
+import aboutPage from "../pages/about/";
 
 const app = express();
 
 app.get("/", async (req, res, next) => {
-  const page = require("../pages/");
-  const html = await render(page);
+  const html = await render(rootPage);
   res.send(html)
 });
 
 app.get("/about/", async (req, res, next) => {
-  const page = require("../pages/about/");
-  const html = await render(page);
+  const html = await render(aboutPage);
   res.send(html)
 });
 

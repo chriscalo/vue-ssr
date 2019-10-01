@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   template: `
     <div>
       <nav>
@@ -10,7 +10,7 @@ module.exports = {
   `,
   data() {
     return {
-      name: "Worldz",
+      name: "World",
     };
   },
 };

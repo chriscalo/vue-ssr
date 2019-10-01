@@ -1,12 +1,12 @@
-const Vue = require("vue");
+import Vue from "vue";
 
 // Step 1: Create a Vue instance
-const { createRenderer } = require("vue-server-renderer");
+import { createRenderer } from "vue-server-renderer";
 
 // Step 2: Create a renderer
 const renderer = createRenderer();
 
-async function render(component) {
+export async function render(component) {
   // Step 3: Render the Vue instance to HTML
   try {
     if (!(component instanceof Vue)) {
@@ -18,7 +18,3 @@ async function render(component) {
     console.error(error);
   }
 }
-
-module.exports = {
-  render,
-};
