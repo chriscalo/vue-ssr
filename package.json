@@ -2,9 +2,8 @@
   "name": "vue-ssr",
   "version": "0.1.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "dev": "nodemon -r esm ./server/index.js"
+    "dev": "nodemon -r esm ./server/index.js",
+    "watch": "parcel watch 'pages/**/*.vue' --target=node --out-dir=pages"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -19,6 +18,7 @@
     "@vue/cli-service": "^3.11.0",
     "node-sass": "^4.9.0",
     "nodemon": "^1.19.3",
+    "parcel-bundler": "^1.12.3",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
   }

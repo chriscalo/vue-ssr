@@ -7,36 +7,35 @@ import { render } from "./vue-ssr";
 import rootPage from "../pages/";
 import aboutPage from "../pages/about/";
 
+
 const app = express();
 
 app.get("/", async (req, res, next) => {
-  const html = await render(rootPage);
-  res.send(`
-    <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <title>Root</title>
-        </head>
-        <body>
-          ${html}
-        </body>
-      </html>
-  `);
+  const content = html({
+    body: await render(rootPage),
+    title: "About",
+  });
+  res.send(content);
 });
 
 app.get("/about/", async (req, res, next) => {
-  const html = await render(aboutPage);
-  res.send(`
-    <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <title>About</title>
-        </head>
-        <body>
-          ${html}
-        </body>
-      </html>
-  `);
+  const content = html({
+    body: await render(aboutPage),
+    title: "About",
+  });
+  res.send(content);
 });
 
 start(app);
+
+function html({ body = "", title = "" }) {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <title>${ title }</title>
+      </head>
+      <body>${ body }</body>
+    </html>
+  `;
+}
