@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "nodemon -r esm ./server/index.js",
-    "watch": "parcel watch 'pages/**/*.vue' --target=node --out-dir=pages"
+    "watch": "parcel watch 'pages/**/*.vue' --target=node --out-dir=pages",
+    "bundler": "nodemon -r esm ./server/parcel.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",
