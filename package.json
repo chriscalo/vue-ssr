@@ -2,15 +2,24 @@
   "name": "vue-ssr",
   "version": "0.1.0",
   "scripts": {
-    "dev": "nodemon -r esm ./server/index.js"
+    "dev": "nodemon -r esm ./server/index.js",
+    "build:client": "webpack --config=webpack.client.config.js --progress --hide-modules",
+    "build:server": "webpack --config=webpack.server.config.js --progress --hide-modules"
   },
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "core-js": "^2.6.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-start": "^0.1.5",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "vue": "^2.6.10",
-    "vue-server-renderer": "^2.6.10"
+    "vue-loader": "^15.7.1",
+    "vue-router": "^3.1.3",
+    "vue-server-renderer": "^2.6.10",
+    "webpack-cli": "^3.3.9",
+    "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
