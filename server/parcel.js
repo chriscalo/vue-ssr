@@ -7,15 +7,13 @@ import { render } from "./vue-ssr";
 export const server = express();
 export default server;
 
+const outDir = path.resolve(__dirname, "../.parcel");
 const entryFiles = "./pages/**/*.vue";
 
 const options = {
   // The out directory to put the build files in
   // defaults to dist
-  outDir: "./.parcel",
-  // The url to serve on
-  // defaults to '/'
-  publicUrl: "./",
+  outDir,
   // Whether to watch the files and rebuild them on change
   // defaults to process.env.NODE_ENV !== 'production'
   watch: true,
@@ -29,52 +27,23 @@ const options = {
   autoInstall: true,
 };
 
-const routes = {};
-
-(() => {
-  const bundler = new Bundler(entryFiles, options);
-  
-  bundler.on("bundled", async (bundle) => {
-    await visitBundle(bundle);
-  });
-  
-  bundler.bundle();
-})();
-
+new Bundler(entryFiles, options).bundle();
 
 server.use(async (req, res, next) => {
-  const component = routes[req.url];
+  const { url } = req;
+  const bundlePath = path.join(outDir, url, "index.js");
+  const { default: component } = await import(bundlePath);
   
   if (component) {
-    console.log(`Component found for route ${ req.url }`);
     const content = html({
       body: await render(component),
       title: "About",
     });
     res.send(content);
   } else {
-    console.log(`Component not found for route ${ req.url }`);
     next();
   }
-  
 });
-
-async function visitBundle(bundle) {
-  const { name: bundlePath, type } = bundle;
-  
-  if (type === "js") {
-    const buildDir = path.resolve(__dirname, "../.parcel");
-    const relativePath = path.relative(buildDir, bundlePath);
-    const route = `/${ relativePath.replace("index.js", "") }`;
-    const { default: component } = await import(bundlePath);
-    routes[route] = component;
-  }
-  
-  const childBundles = Array.from(bundle.childBundles);
-  for (const bundle of childBundles) {
-    await visitBundle(bundle);
-  }
-}
 
 function html({ body = "", title = "" }) {
   return `
