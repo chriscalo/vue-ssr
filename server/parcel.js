@@ -2,6 +2,8 @@ import Bundler from "parcel-bundler";
 import path from "path";
 import express from "express";
 
+import { render } from "./vue-ssr";
+
 export const server = express();
 export default server;
 
@@ -29,40 +31,61 @@ const options = {
 
 const dev = true;
 
-const routes = [];
+const routes = {};
 
-const bundler = new Bundler(entryFiles, options);
-
-if (dev) {
+(() => {
+  const bundler = new Bundler(entryFiles, options);
   
-  bundler.on("bundled", bundle => {
-    visitBundle(bundle);
+  bundler.on("bundled", async (bundle) => {
+    await visitBundle(bundle);
   });
   
   bundler.bundle();
-}
+})();
 
-server.use(bundler.middleware());
-server.use((req, res, next) => {
-  console.log(req.url);
-  console.log(routes);
-  res.send("yikes");
+
+server.use(async (req, res, next) => {
+  const component = routes[req.url];
+  
+  if (component) {
+    console.log(`Component found for route ${ req.url }`);
+    const content = html({
+      body: await render(component),
+      title: "About",
+    });
+    res.send(content);
+  } else {
+    console.log(`Component not found for route ${ req.url }`);
+    next();
+  }
+  
 });
 
-
-
-
-
-function visitBundle(bundle) {
-  const { name, type } = bundle;
+async function visitBundle(bundle) {
+  const { name: bundlePath, type } = bundle;
+  
   if (type === "js") {
     const buildDir = path.resolve(__dirname, "../.parcel");
-    const route = path.relative(buildDir, name);
-    routes.push(route);
+    const relativePath = path.relative(buildDir, bundlePath);
+    const route = `/${ relativePath.replace("index.js", "") }`;
+    const { default: component } = await import(bundlePath);
+    routes[route] = component;
   }
-  console.log({ name, type });
+  
   const childBundles = Array.from(bundle.childBundles);
   for (const bundle of childBundles) {
-    visitBundle(bundle);
+    await visitBundle(bundle);
   }
+}
+
+function html({ body = "", title = "" }) {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <title>${ title }</title>
+      </head>
+      <body>${ body }</body>
+    </html>
+  `;
 }
