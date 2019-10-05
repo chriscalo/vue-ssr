@@ -2,23 +2,9 @@
   "name": "vue-ssr",
   "version": "0.1.0",
   "scripts": {
-    "dev": "nodemon -r esm ./server/index.js"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "esm": "^3.2.25",
-    "express": "^4.17.1",
-    "express-start": "^0.1.5",
-    "vue": "^2.6.10",
-    "vue-server-renderer": "^2.6.10"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
-    "node-sass": "^4.9.0",
-    "nodemon": "^1.19.3",
-    "parcel-bundler": "^1.12.3",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
   }
 }
