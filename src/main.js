@@ -3,7 +3,8 @@ import App from "./App.vue";
 import { createRouter } from "./router";
 import { createStore } from "./store";
 
-Vue.config.productionTip = false;
+// TODO: vuex-router-sync?
+// https://ssr.vuejs.org/guide/data.html#data-store
 
 export async function createApp({
   beforeApp = () => {},
