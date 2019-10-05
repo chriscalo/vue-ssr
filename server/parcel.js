@@ -37,7 +37,6 @@ server.use(async (req, res, next) => {
     const { default: component } = await import(bundlePath);
     const content = html({
       body: await render(component),
-      title: "About",
     });
     res.send(content);
   } catch (error) {
