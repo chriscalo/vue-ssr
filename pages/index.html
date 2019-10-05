@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="./styles.css"/>
+  </head>
+  <body>
+    <div id="app">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+      </nav>
+      <h1>Hello, {{ name }}!</h1>
+      <button @click="counter--">−</button>
+      <span>{{ counter }}</span>
+      <button @click="counter++">+</button>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>
