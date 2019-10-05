@@ -29,8 +29,6 @@ const options = {
   autoInstall: true,
 };
 
-const dev = true;
-
 const routes = {};
 
 (() => {
