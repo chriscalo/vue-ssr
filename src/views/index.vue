@@ -3,7 +3,7 @@
     <Nav/>
     <div class="home">
       <img alt="Vue logo" src="../assets/logo.png">
-      <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <HelloWorld :msg="`Welcome, ${$store.state.user}, to Your Vue.js App`"/>
     </div>
   </main>
 </template>
@@ -17,6 +17,10 @@
     components: {
       HelloWorld,
       Nav,
+    },
+    async serverPrefetch() {
+      console.log("serverPrefetch()");
+      await this.$store.dispatch("getUser");
     },
   };
 </script>
