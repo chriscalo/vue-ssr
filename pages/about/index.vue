@@ -13,9 +13,3 @@
     
   }
 </script>
-
-<style>
-  body {
-    color: red;
-  }
-</style>
