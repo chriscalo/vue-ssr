@@ -12,8 +12,7 @@ export async function render(component) {
     if (!(component instanceof Vue)) {
       component = new Vue(component)
     }
-    const html = await renderer.renderToString(component);
-    return html;
+    return await renderer.renderToString(component);
   } catch (error) {
     console.error(error);
   }
