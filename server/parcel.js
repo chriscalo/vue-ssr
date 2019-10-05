@@ -32,15 +32,15 @@ new Bundler(entryFiles, options).bundle();
 server.use(async (req, res, next) => {
   const { url } = req;
   const bundlePath = path.join(outDir, url, "index.js");
-  const { default: component } = await import(bundlePath);
   
-  if (component) {
+  try {
+    const { default: component } = await import(bundlePath);
     const content = html({
       body: await render(component),
       title: "About",
     });
     res.send(content);
-  } else {
+  } catch (error) {
     next();
   }
 });
@@ -50,7 +50,9 @@ function html({ body = "", title = "" }) {
     <!DOCTYPE html>
     <html lang="en">
       <head>
+        <meta charset="utf-8"/>
         <title>${ title }</title>
+        <link href="/styles.css" rel="stylesheet"/>
       </head>
       <body>${ body }</body>
     </html>
