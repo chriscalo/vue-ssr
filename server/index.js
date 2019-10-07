@@ -1,6 +1,7 @@
 import Vue from "vue";
 import express from "express";
 import { start } from "express-start";
+import html from "tagged-template-noop";
 
 import { render } from "./vue-ssr";
 
@@ -10,33 +11,34 @@ import aboutPage from "../pages/about/";
 const app = express();
 
 app.get("/", async (req, res, next) => {
-  const html = await render(rootPage);
-  res.send(`
-    <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <title>Root</title>
-        </head>
-        <body>
-          ${html}
-        </body>
-      </html>
-  `);
+  const content = htmlDoc({
+    title: "Home",
+    body: await render(rootPage),
+  });
+  res.send(content);
 });
 
 app.get("/about/", async (req, res, next) => {
-  const html = await render(aboutPage);
-  res.send(`
-    <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <title>About</title>
-        </head>
-        <body>
-          ${html}
-        </body>
-      </html>
-  `);
+  const content = htmlDoc({
+    title: "About",
+    body: await render(aboutPage),
+  });
+  res.send(content);
 });
 
 start(app);
+
+
+function htmlDoc({ title = "", body = "" }) {
+  return html`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <title>${ title }</title>
+      </head>
+      <body>
+        ${ body }
+      </body>
+    </html>
+  `;
+}

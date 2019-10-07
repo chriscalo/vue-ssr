@@ -11,6 +11,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-start": "^0.1.5",
+    "tagged-template-noop": "^2.1.0",
     "vue": "^2.6.10",
     "vue-server-renderer": "^2.6.10"
   },
