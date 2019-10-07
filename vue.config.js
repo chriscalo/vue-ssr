@@ -2,20 +2,12 @@
 
 module.exports = {
   configureWebpack: config => {
-    switch (process.env.VUE_CLI_SSR_TARGET) {
-      case "client": {
-        // TODO: add entry points
-        // config.entry["about/index"] = "./src/views/about/entry-client.js"
-        config.resolve.alias["create-api"] = "./create-api-client.js";
-        break;
-      }
-      
-      case "server": {
-        // TODO: add entry points
-        // config.entry["about/index"] = "./src/views/about/entry-server.js"
-        config.resolve.alias["create-api"] = "./create-api-server.js";
-        break;
-      }
-    }
+    const target = process.env.VUE_CLI_SSR_TARGET;
+    // TODO: add entry points
+    // config.entry["about/index"] = "./src/views/about/entry-client.js"
+    config.resolve.alias["create-api"] = `./create-api-${target}.js`;
+    config.entry = {
+      app: [`./src/views/index.${target}.js`],
+    };
   },
 };
